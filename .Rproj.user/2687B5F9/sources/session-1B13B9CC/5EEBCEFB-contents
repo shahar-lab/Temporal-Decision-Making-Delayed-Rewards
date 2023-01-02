@@ -1,0 +1,35 @@
+rm(list=ls())
+library(dplyr)
+
+#load data
+load('./data/df.rdata')
+load('./data/df_rt_memorize.rdata')
+
+
+
+df= df %>% mutate (rt = as.numeric(rt))
+
+
+
+df %>%
+  group_by(set_size) %>%
+  summarize(mean(correct_choice))
+
+
+df_correct = df %>% filter(correct_choice==1)
+df_incorrect = df %>% filter(correct_choice==0)
+
+
+
+df %>%
+  group_by(set_size) %>%
+  summarize(mean(rt))
+
+
+df %>%
+  group_by(set_size) %>%
+  summarize(sd(rt))
+
+
+ggplot() + geom_point(data = df_correct, aes(set_size, rt))
+ggplot() + geom_point(data = df_incorrect, aes(set_size, rt))
